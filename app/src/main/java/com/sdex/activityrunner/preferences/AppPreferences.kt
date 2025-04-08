@@ -80,9 +80,14 @@ class AppPreferences(context: Context) {
         }
 
     @AppCompatDelegate.NightMode
-    val theme: Int
+    var theme: Int
         get() = userPreferences.getString(KEY_THEME, null)?.toInt()
             ?: AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+        set(value) {
+            userPreferences.edit {
+                putString(KEY_THEME, value.toString())
+            }
+        }
 
     var sortBy: String
         get() = userPreferences.getString(KEY_SORT_BY, ApplicationModel.NAME)!!
@@ -97,6 +102,14 @@ class AppPreferences(context: Context) {
         set(value) {
             userPreferences.edit {
                 putString(KEY_ORDER_BY, value)
+            }
+        }
+
+    var suExecutable: String
+        get() = userPreferences.getString(KEY_SU_EXECUTABLE, "su")!!
+        set(value) {
+            userPreferences.edit {
+                putString(KEY_SU_EXECUTABLE, value)
             }
         }
 
@@ -117,5 +130,6 @@ class AppPreferences(context: Context) {
 
         const val KEY_SORT_BY = "sort_by"
         const val KEY_ORDER_BY = "order_by"
+        const val KEY_SU_EXECUTABLE = "su_executable"
     }
 }
